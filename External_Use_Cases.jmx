@@ -38,7 +38,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="idaptiveTokenHost" elementType="Argument">
             <stringProp name="Argument.name">idaptiveTokenHost</stringProp>
-            <stringProp name="Argument.value">10.8.92.60</stringProp>
+            <stringProp name="Argument.value">phoenix-portal.sit.tfal.com.au</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">This is the host from whence we will obtain the hostname</stringProp>
           </elementProp>
