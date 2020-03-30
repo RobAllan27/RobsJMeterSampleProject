@@ -80,7 +80,7 @@
           </elementProp>
           <elementProp name="REST_TOKEN_AUTH_KEY" elementType="Argument">
             <stringProp name="Argument.name">REST_TOKEN_AUTH_KEY</stringProp>
-            <stringProp name="Argument.value">Ym9vbWkubWlsZXM6NmZneUg2ZjAzXjU0MzQ=</stringProp>
+            <stringProp name="Argument.value">9vbWkubWlsZXM6NmZneUg2ZjAzXjU0MzQ=</stringProp>
             <stringProp name="Argument.desc">This is basic auth key used to get API token</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -88,24 +88,37 @@
         <stringProp name="TestPlan.comments">This is the settings for the environment</stringProp>
       </Arguments>
       <hashTree/>
-      <com.blazemeter.jmeter.RandomCSVDataSetConfig guiclass="com.blazemeter.jmeter.RandomCSVDataSetConfigGui" testclass="com.blazemeter.jmeter.RandomCSVDataSetConfig" testname="Random Phoenix Employer User Login Credentials for SIT" enabled="true">
-        <stringProp name="filename">.\credentials\Phoenix_Employer_Users_ Login_Credentials_for _SIT.txt</stringProp>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RESTTokenLookup" enabled="true">
+        <stringProp name="TestPlan.comments">This provide a REST Lookup token</stringProp>
+        <stringProp name="delimiter">,</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="filename">.\credentials\Phoenix_REST_Auth_Token.txt</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="variableNames">FoundRESTToken</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <com.blazemeter.jmeter.RandomCSVDataSetConfig guiclass="com.blazemeter.jmeter.RandomCSVDataSetConfigGui" testclass="com.blazemeter.jmeter.RandomCSVDataSetConfig" testname="Random Phoenix Employer User Login Credentials" enabled="true">
+        <stringProp name="filename">.\credentials\Phoenix_Employer_Users_ Login_Credentials.txt</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
         <stringProp name="delimiter">,</stringProp>
-        <stringProp name="variableNames">employerUsername,employerPassword</stringProp>
+        <stringProp name="variableNames">employerUsername,employerPassword,employerId,sampleEmployeeID,sourceId,nameGetDocandNotes</stringProp>
         <boolProp name="randomOrder">true</boolProp>
-        <boolProp name="ignoreFirstLine">false</boolProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
         <boolProp name="rewindOnTheEndOfList">true</boolProp>
         <boolProp name="independentListPerThread">false</boolProp>
       </com.blazemeter.jmeter.RandomCSVDataSetConfig>
       <hashTree/>
       <com.blazemeter.jmeter.RandomCSVDataSetConfig guiclass="com.blazemeter.jmeter.RandomCSVDataSetConfigGui" testclass="com.blazemeter.jmeter.RandomCSVDataSetConfig" testname="Random Phoenix Employee User Login Credentials" enabled="true">
-        <stringProp name="filename">.\credentials\Phoenix_Employee_Users_ Login_Credentials_for _SIT.txt</stringProp>
+        <stringProp name="filename">.\credentials\Phoenix_Employee_Users_ Login_Credentials.txt</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
         <stringProp name="delimiter">,</stringProp>
-        <stringProp name="variableNames">employeeUsername,employeePassword</stringProp>
+        <stringProp name="variableNames">employeeUsername,employeePassword,employeeId,employerId,employeeBenefitId</stringProp>
         <boolProp name="randomOrder">true</boolProp>
-        <boolProp name="ignoreFirstLine">false</boolProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
         <boolProp name="rewindOnTheEndOfList">true</boolProp>
         <boolProp name="independentListPerThread">false</boolProp>
       </com.blazemeter.jmeter.RandomCSVDataSetConfig>
@@ -166,7 +179,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -1982,7 +1995,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -2151,7 +2164,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -2503,7 +2516,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -3475,7 +3488,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -3637,7 +3650,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -3749,7 +3762,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -4171,7 +4184,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -4587,7 +4600,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -6464,7 +6477,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -6694,7 +6707,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -7852,7 +7865,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -7953,7 +7966,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -8065,7 +8078,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -8466,7 +8479,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -8831,7 +8844,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -9247,7 +9260,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -11051,7 +11064,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -11220,7 +11233,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -11450,7 +11463,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -12490,7 +12503,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -12591,7 +12604,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -12989,7 +13002,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -13094,7 +13107,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -13199,7 +13212,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -13385,7 +13398,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:97,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13429,7 +13442,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -13493,7 +13506,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:95,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13537,7 +13550,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -13662,7 +13675,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:96,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13706,7 +13719,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -13770,7 +13783,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:91,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13814,7 +13827,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -13878,7 +13891,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:103,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13922,7 +13935,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -13986,7 +13999,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:93,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14030,7 +14043,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14094,7 +14107,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:92,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14138,7 +14151,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14202,7 +14215,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:94,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14246,7 +14259,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14371,7 +14384,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:90,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14415,7 +14428,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14479,7 +14492,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:89,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14523,7 +14536,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14587,7 +14600,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:86,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14631,7 +14644,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14695,7 +14708,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:88,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14739,7 +14752,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14803,7 +14816,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:87,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14847,7 +14860,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -14911,7 +14924,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:85,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14955,7 +14968,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15019,7 +15032,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:39,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15063,7 +15076,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15127,7 +15140,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:38,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15171,7 +15184,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15235,7 +15248,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">[{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;gstFlag&quot;:true,&quot;changedFlag&quot;:false,&quot;capBreached&quot;:false,&quot;employeeId&quot;:279,&quot;firstName&quot;:&quot;Ryan&quot;,&quot;lastName&quot;:&quot;Anderson&quot;,&quot;payrollNumber&quot;:&quot;111111&quot;,&quot;description&quot;:&quot;Test Perf Sample&quot;,&quot;startDate&quot;:&quot;2021-06-29T14:00:00.000Z&quot;,&quot;endDate&quot;:&quot;2021-12-29T13:00:00.000Z&quot;,&quot;netValue&quot;:&quot;1&quot;,&quot;grossValue&quot;:2.08,&quot;capThreshhold&quot;:17000,&quot;employerName&quot;:&quot;TEST DATA -  Payfile Test_FullFBT_Fortnight&quot;}]</stringProp>
+                  <stringProp name="Argument.value">[{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;gstFlag&quot;:true,&quot;changedFlag&quot;:false,&quot;capBreached&quot;:false,&quot;employeeId&quot;:${sampleEmployeeID},&quot;firstName&quot;:&quot;Ryan&quot;,&quot;lastName&quot;:&quot;Anderson&quot;,&quot;payrollNumber&quot;:&quot;111111&quot;,&quot;description&quot;:&quot;Test Perf Sample&quot;,&quot;startDate&quot;:&quot;2021-06-29T14:00:00.000Z&quot;,&quot;endDate&quot;:&quot;2021-12-29T13:00:00.000Z&quot;,&quot;netValue&quot;:&quot;1&quot;,&quot;grossValue&quot;:2.08,&quot;capThreshhold&quot;:17000,&quot;employerName&quot;:&quot;TEST DATA -  Payfile Test_FullFBT_Fortnight&quot;}]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15279,7 +15292,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15380,7 +15393,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -15485,7 +15498,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -15553,7 +15566,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:104,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15597,7 +15610,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15661,7 +15674,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:103,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15705,7 +15718,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15769,7 +15782,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:96,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15813,7 +15826,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15877,7 +15890,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:97,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -15921,7 +15934,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -15985,7 +15998,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:94,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16029,7 +16042,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16093,7 +16106,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:95,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16137,7 +16150,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16201,7 +16214,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:93,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16245,7 +16258,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16309,7 +16322,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:92,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16353,7 +16366,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16417,7 +16430,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:89,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16461,7 +16474,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16525,7 +16538,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:91,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16569,7 +16582,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16633,7 +16646,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:90,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16677,7 +16690,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16741,7 +16754,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:88,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16785,7 +16798,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16849,7 +16862,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:87,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -16893,7 +16906,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -16957,7 +16970,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:86,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -17001,7 +17014,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -17065,7 +17078,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:85,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -17109,7 +17122,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -17173,7 +17186,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:39,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -17217,7 +17230,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -17281,7 +17294,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:38,&quot;name&quot;:&quot;employee-in-house&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;id&quot;:${sourceId},&quot;name&quot;:&quot;${nameGetDocandNotes}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -17325,7 +17338,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -17695,7 +17708,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employer-59</stringProp>
+                  <stringProp name="Header.value">employer-${employerId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -18172,7 +18185,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -19924,7 +19937,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -20744,7 +20757,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -21199,7 +21212,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -21658,7 +21671,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -21702,6 +21715,22 @@
                 </elementProp>
               </collectionProp>
             </HeaderManager>
+            <hashTree/>
+            <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
+              <stringProp name="TestPlan.comments">Time to respond to login</stringProp>
+              <stringProp name="DurationAssertion.duration">${shortWait}</stringProp>
+            </DurationAssertion>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="383218193">${allowedHTTPResponseCodes}</stringProp>
+                <stringProp name="0"></stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/customer-proxy/v1.0/getEmployeeInHouseGrossAmt-457" enabled="true">
@@ -21747,7 +21776,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -21852,7 +21881,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -21896,6 +21925,22 @@
                 </elementProp>
               </collectionProp>
             </HeaderManager>
+            <hashTree/>
+            <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
+              <stringProp name="TestPlan.comments">Time to respond to login</stringProp>
+              <stringProp name="DurationAssertion.duration">${shortWait}</stringProp>
+            </DurationAssertion>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="383218193">${allowedHTTPResponseCodes}</stringProp>
+                <stringProp name="0"></stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/customer-proxy/v1.0/getEmployer-460" enabled="true">
@@ -21941,7 +21986,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -22046,7 +22091,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -22586,7 +22631,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -23002,7 +23047,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -24140,7 +24185,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -25364,7 +25409,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -25773,7 +25818,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -25874,7 +25919,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -26036,7 +26081,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -26104,7 +26149,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;employeeId&quot;:33417,&quot;employerId&quot;:2519,&quot;userName&quot;:&quot;migration_EE_1742@mailinator.com&quot;,&quot;emailAddress&quot;:&quot;migration_EE_1742@mailinator.com&quot;,&quot;testAccountFlag&quot;:false,&quot;firstName&quot;:&quot;Alita&quot;,&quot;lastName&quot;:&quot;Cristo&quot;,&quot;payrollNumber&quot;:&quot;10007&quot;,&quot;dateOfBirth&quot;:&quot;1979-07-16T14:00:00.000Z&quot;,&quot;homePhone&quot;:&quot;0740923743&quot;,&quot;officePhone&quot;:&quot;0233445566&quot;,&quot;title&quot;:&quot;ms&quot;,&quot;gender&quot;:&quot;female&quot;,&quot;status&quot;:&quot;active&quot;,&quot;employerPaygroupId&quot;:1893,&quot;startDate&quot;:&quot;2006-09-12T14:00:00.000Z&quot;,&quot;streetAddress&quot;:{&quot;addressId&quot;:48177,&quot;addressLine1&quot;:&quot;PO Box 1787&quot;,&quot;suburb&quot;:&quot;MAREEBA&quot;,&quot;state&quot;:&quot;QLD&quot;,&quot;postCode&quot;:&quot;4880&quot;,&quot;sameAsStreet&quot;:false,&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_ADD_1165&quot;,&quot;createdDatetime&quot;:&quot;Dec 2, 2019, 12:04:01 PM&quot;},&quot;mailAddress&quot;:{&quot;addressLine1&quot;:&quot;PO Box 1787&quot;,&quot;suburb&quot;:&quot;MAREEBA&quot;,&quot;state&quot;:&quot;QLD&quot;,&quot;postCode&quot;:&quot;4880&quot;,&quot;sameAsStreet&quot;:true,&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_ADD_1165&quot;,&quot;createdDatetime&quot;:&quot;Dec 2, 2019, 12:04:01 PM&quot;},&quot;marketingPreference&quot;:false,&quot;inviteEmployee&quot;:false,&quot;isMiles&quot;:false,&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_EE_1742&quot;,&quot;createdDatetime&quot;:&quot;Dec 3, 2019, 12:03:29 PM&quot;,&quot;updatedBy&quot;:&quot;migration_ee_1742@mailinator.com&quot;,&quot;updatedDatetime&quot;:&quot;Mar 9, 2020, 11:37:03 AM&quot;,&quot;employerPaygroupName&quot;:&quot;Fortnightly&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;employeeId&quot;:${employeeId},&quot;employerId&quot;:${employerId},&quot;userName&quot;:&quot;${employeeUsername}&quot;,&quot;emailAddress&quot;:&quot;${employeeUsername}&quot;,&quot;testAccountFlag&quot;:false,&quot;firstName&quot;:&quot;Alita&quot;,&quot;lastName&quot;:&quot;Cristo&quot;,&quot;payrollNumber&quot;:&quot;10007&quot;,&quot;dateOfBirth&quot;:&quot;1979-07-16T14:00:00.000Z&quot;,&quot;homePhone&quot;:&quot;0740923743&quot;,&quot;officePhone&quot;:&quot;0233445566&quot;,&quot;title&quot;:&quot;ms&quot;,&quot;gender&quot;:&quot;female&quot;,&quot;status&quot;:&quot;active&quot;,&quot;employerPaygroupId&quot;:1893,&quot;startDate&quot;:&quot;2006-09-12T14:00:00.000Z&quot;,&quot;streetAddress&quot;:{&quot;addressId&quot;:48177,&quot;addressLine1&quot;:&quot;PO Box 1787&quot;,&quot;suburb&quot;:&quot;MAREEBA&quot;,&quot;state&quot;:&quot;QLD&quot;,&quot;postCode&quot;:&quot;4880&quot;,&quot;sameAsStreet&quot;:false,&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_ADD_1165&quot;,&quot;createdDatetime&quot;:&quot;Dec 2, 2019, 12:04:01 PM&quot;},&quot;mailAddress&quot;:{&quot;addressLine1&quot;:&quot;PO Box 1787&quot;,&quot;suburb&quot;:&quot;MAREEBA&quot;,&quot;state&quot;:&quot;QLD&quot;,&quot;postCode&quot;:&quot;4880&quot;,&quot;sameAsStreet&quot;:true,&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_ADD_1165&quot;,&quot;createdDatetime&quot;:&quot;Dec 2, 2019, 12:04:01 PM&quot;},&quot;marketingPreference&quot;:false,&quot;inviteEmployee&quot;:false,&quot;isMiles&quot;:false,&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_EE_1742&quot;,&quot;createdDatetime&quot;:&quot;Dec 3, 2019, 12:03:29 PM&quot;,&quot;updatedBy&quot;:&quot;migration_ee_1742@mailinator.com&quot;,&quot;updatedDatetime&quot;:&quot;Mar 9, 2020, 11:37:03 AM&quot;,&quot;employerPaygroupName&quot;:&quot;Fortnightly&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -26148,7 +26193,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -26396,7 +26441,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -27046,7 +27091,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -28725,7 +28770,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -29892,7 +29937,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -30301,7 +30346,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -30459,7 +30504,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -30521,7 +30566,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/5546-393" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/{Employment Benefit Id}-393" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -30529,7 +30574,7 @@
             <stringProp name="HTTPSampler.port">443</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/5546</stringProp>
+            <stringProp name="HTTPSampler.path">/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/${employeeBenefitId}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -30564,7 +30609,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -30811,7 +30856,7 @@
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;empBenAdhocRequestId&quot;:null,&quot;claimOption&quot;:&quot;direct_payment_request_of_registration_insurance&quot;,&quot;employee&quot;:{&quot;employeeId&quot;:33417,&quot;employerId&quot;:2519,&quot;employerName&quot;:&quot;Quality Industry Training &amp; Employment - Novated&quot;,&quot;payrollNumber&quot;:&quot;10007&quot;,&quot;emailAddress&quot;:&quot;migration_EE_1742@mailinator.com&quot;,&quot;officePhone&quot;:&quot;0233445566&quot;,&quot;firstName&quot;:&quot;Alita&quot;,&quot;lastName&quot;:&quot;Cristo&quot;,&quot;paygroupName&quot;:&quot;Fortnightly&quot;,&quot;status&quot;:&quot;active&quot;,&quot;startDate&quot;:&quot;Sep 13, 2006, 12:00:00 AM&quot;,&quot;benefits&quot;:[&quot; far fa-credit-card&quot;,&quot;fas fa-car-alt&quot;],&quot;benefitTypes&quot;:[&quot; novated&quot;,&quot;other&quot;],&quot;benefitNames&quot;:[&quot; Credit Card&quot;,&quot;Novated Lease&quot;],&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_EE_1742&quot;,&quot;createdDatetime&quot;:&quot;Dec 3, 2019, 12:03:29 PM&quot;,&quot;updatedBy&quot;:&quot;migration_ee_1742@mailinator.com&quot;,&quot;updatedDatetime&quot;:&quot;Mar 20, 2020, 10:38:46 AM&quot;},&quot;employeeBenefitId&quot;:5546,&quot;documentNote&quot;:{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;docoStatus&quot;:&quot;active&quot;,&quot;noteType&quot;:&quot;direct_payment_request_of_registration_insurance&quot;,&quot;sourceType&quot;:&quot;vehicle_expense_type&quot;,&quot;documentFiles&quot;:[{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;fileBinaryStr&quot;:&quot;data:application/json;base64,ew0KICAiL3V0aWxpdHkvdjEuMC93b3JrUmVxdWVzdHMvc2VhcmNoLTIxMiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvdXRpbGl0eS92MS4wL3dvcmtSZXF1ZXN0cy9zZWFyY2gtMjEyIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxNjk4LjU4MzMzMzMzMzMzMzUsDQogICAgIm1pblJlc1RpbWUiIDogMTI5Mi4wLA0KICAgICJtYXhSZXNUaW1lIiA6IDIxNDEuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogMjA4NC45LA0KICAgICJwY3QyUmVzVGltZSIgOiAyMTQxLjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDIxNDEuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjUzMDMzOTg1OTQ1OTkzNzIsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDIyODguMzY2Nzc0MjA3ODA1LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNTA5NDUwODIyMDI2NzgyMg0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJSZWxhdGVkcy9lbXBsb3llci8yNjQxLTIyMiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llclJlbGF0ZWRzL2VtcGxveWVyLzI2NDEtMjIyIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAyMi40MTY2NjY2NjY2NjY2NjQsDQogICAgIm1pblJlc1RpbWUiIDogMTAuMCwNCiAgICAibWF4UmVzVGltZSIgOiA5NC4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA3My45MDAwMDAwMDAwMDAwNiwNCiAgICAicGN0MlJlc1RpbWUiIDogOTQuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogOTQuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU3MTgzNzAyNjQ0NzQ2MjUsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDAuMTQ3NDI2NzMzMzgwOTg2NCwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQzNDgzNDQwNTUyNzc1NzkzDQogIH0sDQogICIvdHJhbnNhY3Rpb24vdjEuMC9wYXlmaWxlcy9zZWFyY2hQYXlGaWxlcy0yMTgiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3RyYW5zYWN0aW9uL3YxLjAvcGF5ZmlsZXMvc2VhcmNoUGF5RmlsZXMtMjE4IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiA0NS4wLA0KICAgICJtaW5SZXNUaW1lIiA6IDI4LjAsDQogICAgIm1heFJlc1RpbWUiIDogODAuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogNzQuMDAwMDAwMDAwMDAwMDMsDQogICAgInBjdDJSZXNUaW1lIiA6IDgwLjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDgwLjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NjgzOTcxMjAxMjEyNTgxLA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjE0NjUzOTg4MjUzMTI2MTg1LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNTM0OTA3NTc2MjU5OTQ3DQogIH0sDQogICIvdHJhbnNhY3Rpb24vdjEuMC9wYXlmaWxlcy9zZWFyY2hQYXlGaWxlcy0yMTciIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3RyYW5zYWN0aW9uL3YxLjAvcGF5ZmlsZXMvc2VhcmNoUGF5RmlsZXMtMjE3IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAyOS42NjY2NjY2NjY2NjY2NjQsDQogICAgIm1pblJlc1RpbWUiIDogMTcuMCwNCiAgICAibWF4UmVzVGltZSIgOiA4NS4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA3MS4yMDAwMDAwMDAwMDAwNSwNCiAgICAicGN0MlJlc1RpbWUiIDogODUuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogODUuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU2OTQyMjAzNjYzMjgxNzcsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDAuOTAxMzk5NTMyNTk5NDExNSwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjUzODA5NjQxMDI2ODU3NzQNCiAgfSwNCiAgIi9yZXBvcnRpbmcvdjEuMC9yZXBvcnQvc2VhcmNoLTIyNSIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvcmVwb3J0aW5nL3YxLjAvcmVwb3J0L3NlYXJjaC0yMjUiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDI0LjUsDQogICAgIm1pblJlc1RpbWUiIDogMTEuMCwNCiAgICAibWF4UmVzVGltZSIgOiA5MC4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA3OC4wMDAwMDAwMDAwMDAwNCwNCiAgICAicGN0MlJlc1RpbWUiIDogOTAuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogOTAuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU3NTE4MDk0MjMzODExMDYsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDAuMTQ4Mjg4ODM2Njk2NTQ0MTQsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40ODA2MjgwODU2MDYwOTY5Mw0KICB9LA0KICAiL3NlY3VyaXR5L3YxLjAvbG9nb3V0LTIyNiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvc2VjdXJpdHkvdjEuMC9sb2dvdXQtMjI2IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiA4NjYuNSwNCiAgICAibWluUmVzVGltZSIgOiA3NzMuMCwNCiAgICAibWF4UmVzVGltZSIgOiAxMTg0LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDExNTQuMzAwMDAwMDAwMDAwMiwNCiAgICAicGN0MlJlc1RpbWUiIDogMTE4NC4wLA0KICAgICJwY3QzUmVzVGltZSIgOiAxMTg0LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NTU3ODcxMzM1Mjc4NTg5LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjE3MjU5Nzk1NzQ4MjI4NDI2LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNDE0NDg4Mzg2MzY0Njg5DQogIH0sDQogICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llclJlbGF0aW9uc2hpcHMvMjY0MS0yMjEiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJSZWxhdGlvbnNoaXBzLzI2NDEtMjIxIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxOC42NjY2NjY2NjY2NjY2NywNCiAgICAibWluUmVzVGltZSIgOiAxMi4wLA0KICAgICJtYXhSZXNUaW1lIiA6IDM1LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDM0LjEsDQogICAgInBjdDJSZXNUaW1lIiA6IDM1LjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDM1LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NzEyOTI1NDkzOTMwMDE3LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjMwMTI2NzU1NTM0Mzk2NTcsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40MzIxODg3NjQ1Nzk4NjE5NA0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvcGF5Z3JvdXBzL2VtcGxveWVycy8yNjQxLTIyMyIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9wYXlncm91cHMvZW1wbG95ZXJzLzI2NDEtMjIzIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxNDAuMjQ5OTk5OTk5OTk5OTcsDQogICAgIm1pblJlc1RpbWUiIDogMTE1LjAsDQogICAgIm1heFJlc1RpbWUiIDogMjQ3LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDIxOC44MDAwMDAwMDAwMDAxLA0KICAgICJwY3QyUmVzVGltZSIgOiAyNDcuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogMjQ3LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NzI0MDk4NDU0NDkzNDE3LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjQ2MzQwNjAxNzQ1ODUwMDMsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40MzE5MTYwMjI3MDU1OTA1NA0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvcGF5Z3JvdXBzL2VtcGxveWVycy8yNjQxLTIyNCIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9wYXlncm91cHMvZW1wbG95ZXJzLzI2NDEtMjI0IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxOTcuNDE2NjY2NjY2NjY2NjYsDQogICAgIm1pblJlc1RpbWUiIDogMTIxLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDA1LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDM2Ny4yMDAwMDAwMDAwMDAxNiwNCiAgICAicGN0MlJlc1RpbWUiIDogNDA1LjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDQwNS4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTcwNjQwNTQ0MDEwNjUxOSwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMC40NjE5NzM2NDM1Mzk4NzM1LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNDMwNTgwOTgzNDAzODcwODUNCiAgfSwNCiAgIi91dGlsaXR5L3YxLjAvd29ya1JlcXVlc3RzL3NlYXJjaC0yMTEiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3V0aWxpdHkvdjEuMC93b3JrUmVxdWVzdHMvc2VhcmNoLTIxMSIsDQogICAgInNhbXBsZUNvdW50IiA6IDEyLA0KICAgICJlcnJvckNvdW50IiA6IDAsDQogICAgImVycm9yUGN0IiA6IDAuMCwNCiAgICAibWVhblJlc1RpbWUiIDogNzMuODMzMzMzMzMzMzMzMzMsDQogICAgIm1pblJlc1RpbWUiIDogMzEuMCwNCiAgICAibWF4UmVzVGltZSIgOiAxODQuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogMTY5LjkwMDAwMDAwMDAwMDAzLA0KICAgICJwY3QyUmVzVGltZSIgOiAxODQuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogMTg0LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NjcwODA5NTA4MDU3Mjc1LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjE0NjIwMDU1NzYyOTYwMTYzLA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNTAwMjU2OTU4NTU1ODMzOQ0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJzL3NlYXJjaC0yMTMiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJzL3NlYXJjaC0yMTMiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDMyNzguNSwNCiAgICAibWluUmVzVGltZSIgOiAyMjQyLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDg1Ni4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA0NjcxLjUwMDAwMDAwMDAwMSwNCiAgICAicGN0MlJlc1RpbWUiIDogNDg1Ni4wLA0KICAgICJwY3QzUmVzVGltZSIgOiA0ODU2LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41MDg5NzA2MDY5NDc0NDg4LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAxMTAuNTY3ODk5ODYwMDMzMDgsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40MTIzNzg4NTQzOTE5OTIyDQogIH0sDQogICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llckJlbmVmaXRzL2VtcGxveWVyLzI2NDEtMjE5IiA6IHsNCiAgICAidHJhbnNhY3Rpb24iIDogIi9lbXBsb3llci92MS4wL2VtcGxveWVyQmVuZWZpdHMvZW1wbG95ZXIvMjY0MS0yMTkiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDIwLjc1LA0KICAgICJtaW5SZXNUaW1lIiA6IDEyLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDQuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogNDMuNDAwMDAwMDAwMDAwMDA2LA0KICAgICJwY3QyUmVzVGltZSIgOiA0NC4wLA0KICAgICJwY3QzUmVzVGltZSIgOiA0NC4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTcwMTUyNTE1Nzk3OTc1OSwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMC4zODY5Njg3NDg1MTUyMjc4MywNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQzMzU1MzQ3NTU1NDcxMDg1DQogIH0sDQogICJUb3RhbCIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICJUb3RhbCIsDQogICAgInNhbXBsZUNvdW50IiA6IDE4MCwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDUxMC4zNDQ0NDQ0NDQ0NDQ2LA0KICAgICJtaW5SZXNUaW1lIiA6IDEwLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDg1Ni4wLA0KICAgICJwY3QxUmVzVGltZSIgOiAxNjk2LjgsDQogICAgInBjdDJSZXNUaW1lIiA6IDI4NjkuNDk5OTk5OTk5OTk2LA0KICAgICJwY3QzUmVzVGltZSIgOiA0MzU3Ljg0OTk5OTk5OTk5ODUsDQogICAgInRocm91Z2hwdXQiIDogNi42NjgzOTU1MDk5NDcwMjQsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDIwODMuNDU4NTIyNTIyMDQzLA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDUuNDA0MDM0MTQ3NzQyMDA3DQogIH0sDQogICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llckNvbnRhY3RzL2VtcGxveWVyLzI2NDEtMjIwIiA6IHsNCiAgICAidHJhbnNhY3Rpb24iIDogIi9lbXBsb3llci92MS4wL2VtcGxveWVyQ29udGFjdHMvZW1wbG95ZXIvMjY0MS0yMjAiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDE0Ljc1LA0KICAgICJtaW5SZXNUaW1lIiA6IDExLjAsDQogICAgIm1heFJlc1RpbWUiIDogMTkuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogMTguNzAwMDAwMDAwMDAwMDAzLA0KICAgICJwY3QyUmVzVGltZSIgOiAxOS4wLA0KICAgICJwY3QzUmVzVGltZSIgOiAxOS4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTcxMjkyNTQ5MzkzMDAxNywNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMC4xNDcyODYzNjAzOTAzODMyNiwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQzNDQyMDM3NjEwMDkyODQNCiAgfSwNCiAgIi9lbXBsb3llci92MS4wL2VtcGxveWVycy8yNjQxLTIxNiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llcnMvMjY0MS0yMTYiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDEzMC45MTY2NjY2NjY2NjY2NiwNCiAgICAibWluUmVzVGltZSIgOiA3Ny4wLA0KICAgICJtYXhSZXNUaW1lIiA6IDI1Ni4wLA0KICAgICJwY3QxUmVzVGltZSIgOiAyNDEuMzAwMDAwMDAwMDAwMDcsDQogICAgInBjdDJSZXNUaW1lIiA6IDI1Ni4wLA0KICAgICJwY3QzUmVzVGltZSIgOiAyNTYuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU2ODEwMTEyMTk5OTcxNiwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMS4yMzMyODk4MzgwOTExOCwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQyMzExNjk4MTQ4OTM3MTc3DQogIH0sDQogICIvc2VjdXJpdHkvdjEuMC9sb2dpbi0yMTAiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3NlY3VyaXR5L3YxLjAvbG9naW4tMjEwIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxMDkzLjQxNjY2NjY2NjY2NjcsDQogICAgIm1pblJlc1RpbWUiIDogODI4LjAsDQogICAgIm1heFJlc1RpbWUiIDogMTYwOS4wLA0KICAgICJwY3QxUmVzVGltZSIgOiAxNTQxLjUwMDAwMDAwMDAwMDIsDQogICAgInBjdDJSZXNUaW1lIiA6IDE2MDkuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogMTYwOS4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTQ2OTcxMTQ3MjcxOTgxNSwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogNzkuOTkwNzQ2NzE1MzI0MywNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQwNjg0NTQwMDg4NDI3DQogIH0NCn0=&quot;,&quot;documentName&quot;:&quot;statistics.json&quot;}],&quot;summary&quot;:&quot;Summary Information&quot;,&quot;notes&quot;:&quot;Detailed Information&quot;,&quot;validFileSize&quot;:true},&quot;expenseType&quot;:&quot;vehicle_registration&quot;,&quot;expenseAmount&quot;:&quot;45.00&quot;,&quot;status&quot;:&quot;Pending&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;empBenAdhocRequestId&quot;:null,&quot;claimOption&quot;:&quot;direct_payment_request_of_registration_insurance&quot;,&quot;employee&quot;:{&quot;employeeId&quot;:${employeeId},&quot;employerId&quot;:${employerId},&quot;employerName&quot;:&quot;Quality Industry Training &amp; Employment - Novated&quot;,&quot;payrollNumber&quot;:&quot;10007&quot;,&quot;emailAddress&quot;:&quot;${employeeUsername}&quot;,&quot;officePhone&quot;:&quot;0233445566&quot;,&quot;firstName&quot;:&quot;Alita&quot;,&quot;lastName&quot;:&quot;Cristo&quot;,&quot;paygroupName&quot;:&quot;Fortnightly&quot;,&quot;status&quot;:&quot;active&quot;,&quot;startDate&quot;:&quot;Sep 13, 2006, 12:00:00 AM&quot;,&quot;benefits&quot;:[&quot; far fa-credit-card&quot;,&quot;fas fa-car-alt&quot;],&quot;benefitTypes&quot;:[&quot; novated&quot;,&quot;other&quot;],&quot;benefitNames&quot;:[&quot; Credit Card&quot;,&quot;Novated Lease&quot;],&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;createdBy&quot;:&quot;migration_EE_1742&quot;,&quot;createdDatetime&quot;:&quot;Dec 3, 2019, 12:03:29 PM&quot;,&quot;updatedBy&quot;:&quot;migration_ee_1742@mailinator.com&quot;,&quot;updatedDatetime&quot;:&quot;Mar 20, 2020, 10:38:46 AM&quot;},&quot;employeeBenefitId&quot;:${employeeBenefitId},&quot;documentNote&quot;:{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;docoStatus&quot;:&quot;active&quot;,&quot;noteType&quot;:&quot;direct_payment_request_of_registration_insurance&quot;,&quot;sourceType&quot;:&quot;vehicle_expense_type&quot;,&quot;documentFiles&quot;:[{&quot;brandId&quot;:1,&quot;deletedFlag&quot;:false,&quot;fileBinaryStr&quot;:&quot;data:application/json;base64,ew0KICAiL3V0aWxpdHkvdjEuMC93b3JrUmVxdWVzdHMvc2VhcmNoLTIxMiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvdXRpbGl0eS92MS4wL3dvcmtSZXF1ZXN0cy9zZWFyY2gtMjEyIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxNjk4LjU4MzMzMzMzMzMzMzUsDQogICAgIm1pblJlc1RpbWUiIDogMTI5Mi4wLA0KICAgICJtYXhSZXNUaW1lIiA6IDIxNDEuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogMjA4NC45LA0KICAgICJwY3QyUmVzVGltZSIgOiAyMTQxLjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDIxNDEuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjUzMDMzOTg1OTQ1OTkzNzIsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDIyODguMzY2Nzc0MjA3ODA1LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNTA5NDUwODIyMDI2NzgyMg0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJSZWxhdGVkcy9lbXBsb3llci8yNjQxLTIyMiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llclJlbGF0ZWRzL2VtcGxveWVyLzI2NDEtMjIyIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAyMi40MTY2NjY2NjY2NjY2NjQsDQogICAgIm1pblJlc1RpbWUiIDogMTAuMCwNCiAgICAibWF4UmVzVGltZSIgOiA5NC4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA3My45MDAwMDAwMDAwMDAwNiwNCiAgICAicGN0MlJlc1RpbWUiIDogOTQuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogOTQuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU3MTgzNzAyNjQ0NzQ2MjUsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDAuMTQ3NDI2NzMzMzgwOTg2NCwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQzNDgzNDQwNTUyNzc1NzkzDQogIH0sDQogICIvdHJhbnNhY3Rpb24vdjEuMC9wYXlmaWxlcy9zZWFyY2hQYXlGaWxlcy0yMTgiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3RyYW5zYWN0aW9uL3YxLjAvcGF5ZmlsZXMvc2VhcmNoUGF5RmlsZXMtMjE4IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiA0NS4wLA0KICAgICJtaW5SZXNUaW1lIiA6IDI4LjAsDQogICAgIm1heFJlc1RpbWUiIDogODAuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogNzQuMDAwMDAwMDAwMDAwMDMsDQogICAgInBjdDJSZXNUaW1lIiA6IDgwLjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDgwLjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NjgzOTcxMjAxMjEyNTgxLA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjE0NjUzOTg4MjUzMTI2MTg1LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNTM0OTA3NTc2MjU5OTQ3DQogIH0sDQogICIvdHJhbnNhY3Rpb24vdjEuMC9wYXlmaWxlcy9zZWFyY2hQYXlGaWxlcy0yMTciIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3RyYW5zYWN0aW9uL3YxLjAvcGF5ZmlsZXMvc2VhcmNoUGF5RmlsZXMtMjE3IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAyOS42NjY2NjY2NjY2NjY2NjQsDQogICAgIm1pblJlc1RpbWUiIDogMTcuMCwNCiAgICAibWF4UmVzVGltZSIgOiA4NS4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA3MS4yMDAwMDAwMDAwMDAwNSwNCiAgICAicGN0MlJlc1RpbWUiIDogODUuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogODUuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU2OTQyMjAzNjYzMjgxNzcsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDAuOTAxMzk5NTMyNTk5NDExNSwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjUzODA5NjQxMDI2ODU3NzQNCiAgfSwNCiAgIi9yZXBvcnRpbmcvdjEuMC9yZXBvcnQvc2VhcmNoLTIyNSIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvcmVwb3J0aW5nL3YxLjAvcmVwb3J0L3NlYXJjaC0yMjUiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDI0LjUsDQogICAgIm1pblJlc1RpbWUiIDogMTEuMCwNCiAgICAibWF4UmVzVGltZSIgOiA5MC4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA3OC4wMDAwMDAwMDAwMDAwNCwNCiAgICAicGN0MlJlc1RpbWUiIDogOTAuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogOTAuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU3NTE4MDk0MjMzODExMDYsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDAuMTQ4Mjg4ODM2Njk2NTQ0MTQsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40ODA2MjgwODU2MDYwOTY5Mw0KICB9LA0KICAiL3NlY3VyaXR5L3YxLjAvbG9nb3V0LTIyNiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvc2VjdXJpdHkvdjEuMC9sb2dvdXQtMjI2IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiA4NjYuNSwNCiAgICAibWluUmVzVGltZSIgOiA3NzMuMCwNCiAgICAibWF4UmVzVGltZSIgOiAxMTg0LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDExNTQuMzAwMDAwMDAwMDAwMiwNCiAgICAicGN0MlJlc1RpbWUiIDogMTE4NC4wLA0KICAgICJwY3QzUmVzVGltZSIgOiAxMTg0LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NTU3ODcxMzM1Mjc4NTg5LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjE3MjU5Nzk1NzQ4MjI4NDI2LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNDE0NDg4Mzg2MzY0Njg5DQogIH0sDQogICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llclJlbGF0aW9uc2hpcHMvMjY0MS0yMjEiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJSZWxhdGlvbnNoaXBzLzI2NDEtMjIxIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxOC42NjY2NjY2NjY2NjY2NywNCiAgICAibWluUmVzVGltZSIgOiAxMi4wLA0KICAgICJtYXhSZXNUaW1lIiA6IDM1LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDM0LjEsDQogICAgInBjdDJSZXNUaW1lIiA6IDM1LjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDM1LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NzEyOTI1NDkzOTMwMDE3LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjMwMTI2NzU1NTM0Mzk2NTcsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40MzIxODg3NjQ1Nzk4NjE5NA0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvcGF5Z3JvdXBzL2VtcGxveWVycy8yNjQxLTIyMyIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9wYXlncm91cHMvZW1wbG95ZXJzLzI2NDEtMjIzIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxNDAuMjQ5OTk5OTk5OTk5OTcsDQogICAgIm1pblJlc1RpbWUiIDogMTE1LjAsDQogICAgIm1heFJlc1RpbWUiIDogMjQ3LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDIxOC44MDAwMDAwMDAwMDAxLA0KICAgICJwY3QyUmVzVGltZSIgOiAyNDcuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogMjQ3LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NzI0MDk4NDU0NDkzNDE3LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjQ2MzQwNjAxNzQ1ODUwMDMsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40MzE5MTYwMjI3MDU1OTA1NA0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvcGF5Z3JvdXBzL2VtcGxveWVycy8yNjQxLTIyNCIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9wYXlncm91cHMvZW1wbG95ZXJzLzI2NDEtMjI0IiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxOTcuNDE2NjY2NjY2NjY2NjYsDQogICAgIm1pblJlc1RpbWUiIDogMTIxLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDA1LjAsDQogICAgInBjdDFSZXNUaW1lIiA6IDM2Ny4yMDAwMDAwMDAwMDAxNiwNCiAgICAicGN0MlJlc1RpbWUiIDogNDA1LjAsDQogICAgInBjdDNSZXNUaW1lIiA6IDQwNS4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTcwNjQwNTQ0MDEwNjUxOSwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMC40NjE5NzM2NDM1Mzk4NzM1LA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNDMwNTgwOTgzNDAzODcwODUNCiAgfSwNCiAgIi91dGlsaXR5L3YxLjAvd29ya1JlcXVlc3RzL3NlYXJjaC0yMTEiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3V0aWxpdHkvdjEuMC93b3JrUmVxdWVzdHMvc2VhcmNoLTIxMSIsDQogICAgInNhbXBsZUNvdW50IiA6IDEyLA0KICAgICJlcnJvckNvdW50IiA6IDAsDQogICAgImVycm9yUGN0IiA6IDAuMCwNCiAgICAibWVhblJlc1RpbWUiIDogNzMuODMzMzMzMzMzMzMzMzMsDQogICAgIm1pblJlc1RpbWUiIDogMzEuMCwNCiAgICAibWF4UmVzVGltZSIgOiAxODQuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogMTY5LjkwMDAwMDAwMDAwMDAzLA0KICAgICJwY3QyUmVzVGltZSIgOiAxODQuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogMTg0LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41NjcwODA5NTA4MDU3Mjc1LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAwLjE0NjIwMDU1NzYyOTYwMTYzLA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDAuNTAwMjU2OTU4NTU1ODMzOQ0KICB9LA0KICAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJzL3NlYXJjaC0yMTMiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL2VtcGxveWVyL3YxLjAvZW1wbG95ZXJzL3NlYXJjaC0yMTMiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDMyNzguNSwNCiAgICAibWluUmVzVGltZSIgOiAyMjQyLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDg1Ni4wLA0KICAgICJwY3QxUmVzVGltZSIgOiA0NjcxLjUwMDAwMDAwMDAwMSwNCiAgICAicGN0MlJlc1RpbWUiIDogNDg1Ni4wLA0KICAgICJwY3QzUmVzVGltZSIgOiA0ODU2LjAsDQogICAgInRocm91Z2hwdXQiIDogMC41MDg5NzA2MDY5NDc0NDg4LA0KICAgICJyZWNlaXZlZEtCeXRlc1BlclNlYyIgOiAxMTAuNTY3ODk5ODYwMDMzMDgsDQogICAgInNlbnRLQnl0ZXNQZXJTZWMiIDogMC40MTIzNzg4NTQzOTE5OTIyDQogIH0sDQogICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llckJlbmVmaXRzL2VtcGxveWVyLzI2NDEtMjE5IiA6IHsNCiAgICAidHJhbnNhY3Rpb24iIDogIi9lbXBsb3llci92MS4wL2VtcGxveWVyQmVuZWZpdHMvZW1wbG95ZXIvMjY0MS0yMTkiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDIwLjc1LA0KICAgICJtaW5SZXNUaW1lIiA6IDEyLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDQuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogNDMuNDAwMDAwMDAwMDAwMDA2LA0KICAgICJwY3QyUmVzVGltZSIgOiA0NC4wLA0KICAgICJwY3QzUmVzVGltZSIgOiA0NC4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTcwMTUyNTE1Nzk3OTc1OSwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMC4zODY5Njg3NDg1MTUyMjc4MywNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQzMzU1MzQ3NTU1NDcxMDg1DQogIH0sDQogICJUb3RhbCIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICJUb3RhbCIsDQogICAgInNhbXBsZUNvdW50IiA6IDE4MCwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDUxMC4zNDQ0NDQ0NDQ0NDQ2LA0KICAgICJtaW5SZXNUaW1lIiA6IDEwLjAsDQogICAgIm1heFJlc1RpbWUiIDogNDg1Ni4wLA0KICAgICJwY3QxUmVzVGltZSIgOiAxNjk2LjgsDQogICAgInBjdDJSZXNUaW1lIiA6IDI4NjkuNDk5OTk5OTk5OTk2LA0KICAgICJwY3QzUmVzVGltZSIgOiA0MzU3Ljg0OTk5OTk5OTk5ODUsDQogICAgInRocm91Z2hwdXQiIDogNi42NjgzOTU1MDk5NDcwMjQsDQogICAgInJlY2VpdmVkS0J5dGVzUGVyU2VjIiA6IDIwODMuNDU4NTIyNTIyMDQzLA0KICAgICJzZW50S0J5dGVzUGVyU2VjIiA6IDUuNDA0MDM0MTQ3NzQyMDA3DQogIH0sDQogICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llckNvbnRhY3RzL2VtcGxveWVyLzI2NDEtMjIwIiA6IHsNCiAgICAidHJhbnNhY3Rpb24iIDogIi9lbXBsb3llci92MS4wL2VtcGxveWVyQ29udGFjdHMvZW1wbG95ZXIvMjY0MS0yMjAiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDE0Ljc1LA0KICAgICJtaW5SZXNUaW1lIiA6IDExLjAsDQogICAgIm1heFJlc1RpbWUiIDogMTkuMCwNCiAgICAicGN0MVJlc1RpbWUiIDogMTguNzAwMDAwMDAwMDAwMDAzLA0KICAgICJwY3QyUmVzVGltZSIgOiAxOS4wLA0KICAgICJwY3QzUmVzVGltZSIgOiAxOS4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTcxMjkyNTQ5MzkzMDAxNywNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMC4xNDcyODYzNjAzOTAzODMyNiwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQzNDQyMDM3NjEwMDkyODQNCiAgfSwNCiAgIi9lbXBsb3llci92MS4wL2VtcGxveWVycy8yNjQxLTIxNiIgOiB7DQogICAgInRyYW5zYWN0aW9uIiA6ICIvZW1wbG95ZXIvdjEuMC9lbXBsb3llcnMvMjY0MS0yMTYiLA0KICAgICJzYW1wbGVDb3VudCIgOiAxMiwNCiAgICAiZXJyb3JDb3VudCIgOiAwLA0KICAgICJlcnJvclBjdCIgOiAwLjAsDQogICAgIm1lYW5SZXNUaW1lIiA6IDEzMC45MTY2NjY2NjY2NjY2NiwNCiAgICAibWluUmVzVGltZSIgOiA3Ny4wLA0KICAgICJtYXhSZXNUaW1lIiA6IDI1Ni4wLA0KICAgICJwY3QxUmVzVGltZSIgOiAyNDEuMzAwMDAwMDAwMDAwMDcsDQogICAgInBjdDJSZXNUaW1lIiA6IDI1Ni4wLA0KICAgICJwY3QzUmVzVGltZSIgOiAyNTYuMCwNCiAgICAidGhyb3VnaHB1dCIgOiAwLjU2ODEwMTEyMTk5OTcxNiwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogMS4yMzMyODk4MzgwOTExOCwNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQyMzExNjk4MTQ4OTM3MTc3DQogIH0sDQogICIvc2VjdXJpdHkvdjEuMC9sb2dpbi0yMTAiIDogew0KICAgICJ0cmFuc2FjdGlvbiIgOiAiL3NlY3VyaXR5L3YxLjAvbG9naW4tMjEwIiwNCiAgICAic2FtcGxlQ291bnQiIDogMTIsDQogICAgImVycm9yQ291bnQiIDogMCwNCiAgICAiZXJyb3JQY3QiIDogMC4wLA0KICAgICJtZWFuUmVzVGltZSIgOiAxMDkzLjQxNjY2NjY2NjY2NjcsDQogICAgIm1pblJlc1RpbWUiIDogODI4LjAsDQogICAgIm1heFJlc1RpbWUiIDogMTYwOS4wLA0KICAgICJwY3QxUmVzVGltZSIgOiAxNTQxLjUwMDAwMDAwMDAwMDIsDQogICAgInBjdDJSZXNUaW1lIiA6IDE2MDkuMCwNCiAgICAicGN0M1Jlc1RpbWUiIDogMTYwOS4wLA0KICAgICJ0aHJvdWdocHV0IiA6IDAuNTQ2OTcxMTQ3MjcxOTgxNSwNCiAgICAicmVjZWl2ZWRLQnl0ZXNQZXJTZWMiIDogNzkuOTkwNzQ2NzE1MzI0MywNCiAgICAic2VudEtCeXRlc1BlclNlYyIgOiAwLjQwNjg0NTQwMDg4NDI3DQogIH0NCn0=&quot;,&quot;documentName&quot;:&quot;statistics.json&quot;}],&quot;summary&quot;:&quot;Summary Information&quot;,&quot;notes&quot;:&quot;Detailed Information&quot;,&quot;validFileSize&quot;:true},&quot;expenseType&quot;:&quot;vehicle_registration&quot;,&quot;expenseAmount&quot;:&quot;45.00&quot;,&quot;status&quot;:&quot;Pending&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -30855,7 +30900,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -30913,7 +30958,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/5546-411" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/{ Employment Benefit Id }-411" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -30921,7 +30966,7 @@
             <stringProp name="HTTPSampler.port">443</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/5546</stringProp>
+            <stringProp name="HTTPSampler.path">/customer-proxy/v1.0/getEmployeeBenefitAdhocRequest/${employeeBenefitId}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -30956,7 +31001,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -30976,7 +31021,7 @@
                 </elementProp>
                 <elementProp name="PHX-Token" elementType="Header">
                   <stringProp name="Header.name">PHX-Token</stringProp>
-                  <stringProp name="Header.value">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjE2RTMzN0Y1N0M1NjRCRTBEN0Q0QjhGOTI5Njk4OUI5Qjk0MjlENUQiLCJ4NXQiOiJGdU0zOVh4V1MtRFgxTGo1S1dtSnVibENuVjAiLCJhcHBfaWQiOiJQaG9lbml4In0.eyJpc3MiOiJodHRwczovL2FhYTQ0OTAubXkuaWRhcHRpdmUuYXBwLyIsImlhdCI6MTU4NDY3OTExNywidW5pcXVlX25hbWUiOiJtaWdyYXRpb25fZWVfMTc0MkBtYWlsaW5hdG9yLmNvbSIsImV4cCI6MTU4NDY5NzExNywic3ViIjoiMzMyMGFmMDctMjcwZS00ZWU2LTkxN2MtMDc3MjUzN2JlMDYxIiwic2NvcGUiOiJBY2NvdW50In0.ZHkbqHtwIlcNPlBzXRQHBt84dy7dZZed47qAPU9O-TkDWqtXjEex9XOSePGNB_2V-85rGirUTJzeA5ZytHABxKSRn21c3FnIzH7Z2Fl_C6E7fYd_83ZiRjzR5hbAdjmujkhebmXErP1IK-zsuf1BJyoHM-kF1s4Oczg-DvV10-xv0qOfYFwCzHyRKCHEB7yciOVXMV-FJ8nz0TW5AHBeTxerQU4VhSXrtgVKn8iId7Y8ME1zUVX3k-LRlgyjUuMkAVoVOLtztgcA18Pjk-pRFd1JMdADZ37YAIyuJe281GcgKHSbI0FCWf6lIUv9jH4odnK-1zp5p-xPlayjvQ4rgA</stringProp>
+                  <stringProp name="Header.value">${PHX_TOKEN_VALUE_FOR_EMPLOYEE}</stringProp>
                 </elementProp>
                 <elementProp name="Cache-Control" elementType="Header">
                   <stringProp name="Header.name">Cache-Control</stringProp>
@@ -31000,6 +31045,22 @@
                 </elementProp>
               </collectionProp>
             </HeaderManager>
+            <hashTree/>
+            <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
+              <stringProp name="TestPlan.comments">Time to respond to login</stringProp>
+              <stringProp name="DurationAssertion.duration">${shortWait}</stringProp>
+            </DurationAssertion>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="383218193">${allowedHTTPResponseCodes}</stringProp>
+                <stringProp name="0"></stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="//oauth2/endsession-415" enabled="true">
@@ -31192,7 +31253,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -31785,7 +31846,7 @@
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                  <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -32589,7 +32650,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -33189,7 +33250,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -33351,7 +33412,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -33639,7 +33700,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -33865,7 +33926,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -33966,7 +34027,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Pragma" elementType="Header">
                   <stringProp name="Header.name">Pragma</stringProp>
@@ -34274,7 +34335,7 @@
                 </elementProp>
                 <elementProp name="PHX-Profile" elementType="Header">
                   <stringProp name="Header.name">PHX-Profile</stringProp>
-                  <stringProp name="Header.value">employee-33417</stringProp>
+                  <stringProp name="Header.value">employee-${employeeId}</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
@@ -34741,7 +34802,7 @@
               </elementProp>
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
               </elementProp>
             </collectionProp>
             <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
@@ -34809,7 +34870,7 @@
               </elementProp>
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Basic ${REST_TOKEN_AUTH_KEY}</stringProp>
+                <stringProp name="Header.value">Basic ${FoundRESTToken}</stringProp>
               </elementProp>
             </collectionProp>
             <stringProp name="TestPlan.comments">Headers required for obtaining the header</stringProp>
